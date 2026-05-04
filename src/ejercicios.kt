@@ -813,3 +813,105 @@ fun ejercicio27() {
         }
     }
 }
+
+// ============================================================
+// EJERCICIO 28: Calculadora de Tarifas de Parking
+// Estructura que almacena tarifas por horas (1..10)
+// y permite consultar el costo total rápidamente
+// ============================================================
+fun ejercicio28() {
+    // Map<Int, Double> donde la clave es la hora y el valor es la tarifa acumulada
+    val tarifasPorHora = mapOf(
+        1  to 3000.0,
+        2  to 5500.0,
+        3  to 7500.0,
+        4  to 9000.0,
+        5  to 10000.0,
+        6  to 11000.0,
+        7  to 11800.0,
+        8  to 12500.0,
+        9  to 13000.0,
+        10 to 13500.0
+    )
+
+    // Función para consultar el costo según las horas que lleva el vehículo
+    fun consultarCosto(horas: Int): Double {
+        if (horas < 1) return 0.0
+        val horasEfectivas = minOf(horas, 10) // Máximo 10 horas en la estructura
+        return tarifasPorHora[horasEfectivas] ?: tarifasPorHora[10]!!
+    }
+
+    println("Tarifas de Parking:")
+    for ((hora, tarifa) in tarifasPorHora) {
+        println("  $hora hora(s): \$${"%.0f".format(tarifa)}")
+    }
+
+    println("\nConsultas de costo:")
+    val consultas = listOf(1, 3, 5, 7, 10, 12)
+    for (horas in consultas) {
+        println("  $horas hora(s) -> \$${"%.0f".format(consultarCosto(horas))}")
+    }
+}
+
+// ============================================================
+// EJERCICIO 29: Parejas de Viaje por Peso
+// Encuentra dos maletas cuyos pesos sumen exactamente el target
+// ============================================================
+fun ejercicio29() {
+    val pesos = listOf(12, 7, 5, 18, 3, 9, 15, 6, 11, 4)
+    val target = 20
+
+    println("Pesos de maletas: $pesos")
+    println("Peso objetivo (target): $target kg")
+
+    // Usamos un Set para guardar los pesos vistos y buscar el complemento
+    // Para cada peso 'x', buscamos si ya vimos 'target - x'
+    val vistos = mutableSetOf<Int>()
+    var parejaEncontrada = false
+
+    for (peso in pesos) {
+        val complemento = target - peso
+        if (vistos.contains(complemento)) {
+            println("\n✅ Pareja encontrada: $complemento kg + $peso kg = $target kg")
+            parejaEncontrada = true
+            break
+        }
+        vistos.add(peso)
+    }
+
+    if (!parejaEncontrada) {
+        println("\n❌ No existe ninguna pareja que sume exactamente $target kg")
+    }
+}
+
+// ============================================================
+// EJERCICIO 30: Espejo de Layout de Tienda (Matriz transpuesta)
+// Plano de estanterías 3x2 -> transpuesto 2x3
+// ============================================================
+fun ejercicio30() {
+    // Plano original de la tienda: 3 filas x 2 columnas
+    val planoOriginal = arrayOf(
+        intArrayOf(1, 2),
+        intArrayOf(3, 4),
+        intArrayOf(5, 6)
+    )
+
+    val filas = planoOriginal.size        // 3
+    val columnas = planoOriginal[0].size  // 2
+
+    // La transpuesta tiene las dimensiones invertidas: 2 filas x 3 columnas
+    // planoOriginal[i][j] -> transpuesta[j][i]
+    val transpuesta = Array(columnas) { IntArray(filas) }
+
+    for (i in 0 until filas) {
+        for (j in 0 until columnas) {
+            transpuesta[j][i] = planoOriginal[i][j]
+        }
+    }
+
+    println("Plano original (${filas}x${columnas}):")
+    for (fila in planoOriginal) println("  ${fila.toList()}")
+
+    println("\nPlano transpuesto (${columnas}x${filas}) - reorganización simétrica:")
+    for (fila in transpuesta) println("  ${fila.toList()}")
+}

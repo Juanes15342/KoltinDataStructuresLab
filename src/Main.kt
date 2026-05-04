@@ -28,4 +28,8 @@ fun main() {
     ejercicio25()
     ejercicio26()
     ejercicio27()
+    ejercicio27()
+    ejercicio28()
+    ejercicio29()
+    ejercicio30()
 }
